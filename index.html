@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyence Datamatrix by Smooth Print</title>
+    <style>
+        body {
+            background: url('office.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+        .logo {
+            max-width: 600px;
+           -bottom: 20px;
+        }
+        input {
+            display: block;
+            width: 90%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1965E1;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="Bluebar.jpg" alt="Logo" class="logo">
+        <h1>Brother Solutions</h1>
+        <h2>QR PRINT by Smooth Print</h2>
+        <input type="text" id="article" placeholder="Input Article Name" required>
+        <input type="text" id="datamatrix" placeholder="Input new Code" required>
+        <input type="text" id="copies" placeholder="Number of copies" required>
+        <button onclick="sendToPrint()">Send to Print</button>
+        <div class="button-group">
+            <button onclick="downloadTemplate()">Download Template</button>
+            <button onclick="window.location.href='https://apps.apple.com/us/app/smooth-print/id1629559918'">Smooth Print for iOS</button>
+            <button onclick="window.location.href='https://support.brother.com/g/b/agreement.aspx?dlid=dlfp101087_000&c=eu_ot&lang=en'">Smooth Print for Android</button>
+        </div>
+    </div>
+
+    <script>
+        function sendToPrint() {
+            const article = document.getElementById('article').value;
+	    const datamatrix = document.getElementById('datamatrix').value;
+            const copies = document.getElementById('copies').value;
+
+            const url = `brotherwebprint://print?filename=gf.lbx&size=102x76.bin&text_artikel1=${article}&barcode_barcode1=${datamatrix}&copies=${copies}`;
+            
+            // Open the generated URL in a new window
+            window.open(url, '_blank');
+        }
+
+        function downloadTemplate() {
+            const link = document.createElement('a');
+            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip'; // 
+            link.download = 'keyence.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
