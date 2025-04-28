@@ -25,7 +25,7 @@
         }
         .logo {
             max-width: 600px;
-           -bottom: 20px;
+            margin-bottom: 20px;
         }
         input {
             display: block;
@@ -71,18 +71,18 @@
     <script>
         function sendToPrint() {
             const article = document.getElementById('article').value;
-	    const datamatrix = document.getElementById('datamatrix').value;
+            const datamatrix = document.getElementById('datamatrix').value;
             const copies = document.getElementById('copies').value;
 
             const url = `brotherwebprint://print?filename=gf.lbx&size=102x76.bin&text_artikel1=${article}&barcode_barcode1=${datamatrix}&copies=${copies}`;
             
-            // Open the generated URL in a new window
-            window.open(url, '_blank');
+            // Navigate to the generated URL to trigger the app in the background
+            window.location.href = url;
         }
 
         function downloadTemplate() {
             const link = document.createElement('a');
-            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip'; // 
+            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip';
             link.download = 'keyence.zip';
             document.body.appendChild(link);
             link.click();
