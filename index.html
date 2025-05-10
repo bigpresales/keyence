@@ -23,14 +23,18 @@
             width: 100%;
             max-width: 600px;
         }
-        .logo {
-            max-width: 600px;
-           -bottom: 20px;
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
         }
-        input {
+        .input-group label {
             display: block;
-            width: 90%;
-            margin: 10px 0;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            display: block;
+            width: 100%;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -54,40 +58,71 @@
 </head>
 <body>
     <div class="container">
-        <img src="Bluebar.jpg" alt="Logo" class="logo">
         <h1>Brother Solutions</h1>
         <h2>QR PRINT by Smooth Print</h2>
-        <input type="text" id="article" placeholder="Input Article Name" required>
-        <input type="text" id="datamatrix" placeholder="Input new Code" required>
-        <input type="text" id="copies" placeholder="Number of copies" required>
+
+        <div class="input-group">
+            <label for="text_text1">Artikelnummer</label>
+            <input type="text" id="text_text1" required>
+        </div>
+
+        <div class="input-group">
+            <label for="text_text2">Gießdatum</label>
+            <input type="date" id="text_text2">
+        </div>
+
+        <div class="input-group">
+            <label for="text_text3">Präge-ID</label>
+            <input type="text" id="text_text3" required>
+        </div>
+
+        <div class="input-group">
+            <label for="copies">Number of copies</label>
+            <input type="text" id="copies" required>
+        </div>
+
         <button onclick="sendToPrint()">Send to Print</button>
+
         <div class="button-group">
             <button onclick="downloadTemplate()">Download Template</button>
-            <button onclick="window.location.href='https://apps.apple.com/us/app/smooth-print/id1629559918'">Smooth Print for iOS</button>
-            <button onclick="window.location.href='https://support.brother.com/g/b/agreement.aspx?dlid=dlfp101087_000&c=eu_ot&lang=en'">Smooth Print for Android</button>
         </div>
     </div>
 
-    <script>
-        function sendToPrint() {
-            const article = document.getElementById('article').value;
-	    const datamatrix = document.getElementById('datamatrix').value;
-            const copies = document.getElementById('copies').value;
+<script>
+    function formatDate(date) {
+        let day = String(date.getDate()).padStart(2, '0');
+        let month = String(date.getMonth() + 1).padStart(2, '0');
+        let year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+    }
 
-            const url = `brotherwebprint://print?filename=gf.lbx&size=102x76.bin&text_artikel1=${article}&barcode_barcode1=${datamatrix}&copies=${copies}`;
-            
-            // Open the generated URL in a new window
-            window.open(url, '_blank');
+    // Set default date to today in correct format
+    window.onload = function () {
+        const dateInput = document.getElementById('text_text2');
+        let today = new Date();
+        dateInput.valueAsDate = today;
+    };
+
+    function sendToPrint() {
+        const text1 = document.getElementById('text_text1').value;
+        let text2 = document.getElementById('text_text2').value;
+        const text3 = document.getElementById('text_text3').value;
+        const copies = document.getElementById('copies').value;
+
+        // Convert the date format before using it in the URL scheme
+        let selectedDate = new Date(text2);
+        if (!isNaN(selectedDate)) {
+            text2 = formatDate(selectedDate);
         }
 
-        function downloadTemplate() {
-            const link = document.createElement('a');
-            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip'; // 
-            link.download = 'keyence.zip';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    </script>
+        // Construct barcode_datamatrix from the inputs
+        const barcode_datamatrix = `${text1};${text2};${text3}`;
+
+        // Generate the URL while keeping all fields
+        const url = `brotherwebprint://print?filename=gf.lbx&size=102x76.bin&text_text1=${text1}&text_text2=${text2}&text_text3=${text3}&barcode_datamatrix=${barcode_datamatrix}&copies=${copies}`;
+
+        window.open(url, '_blank');
+    }
+</script>
 </body>
 </html>
