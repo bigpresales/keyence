@@ -80,13 +80,15 @@
             <label for="copies">Number of copies</label>
             <input type="text" id="copies" required>
         </div>
-
-        <button onclick="sendToPrint()">Send to Print</button>
-
+        
+       <button onclick="sendToPrint()">Send to Print</button>
         <div class="button-group">
             <button onclick="downloadTemplate()">Download Template</button>
+            <button onclick="window.location.href='https://apps.apple.com/us/app/smooth-print/id1629559918'">Smooth Print for iOS</button>
+            <button onclick="window.location.href='https://support.brother.com/g/b/agreement.aspx?dlid=dlfp101087_000&c=eu_ot&lang=en'">Smooth Print for Android</button>
         </div>
     </div>
+
 
 <script>
     function formatDate(date) {
@@ -123,6 +125,14 @@
 
         window.open(url, '_blank');
     }
+            function downloadTemplate() {
+            const link = document.createElement('a');
+            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip'; // 
+            link.download = 'keyence.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 </script>
 </body>
 </html>
