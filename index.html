@@ -25,7 +25,7 @@
         }
         .logo {
             max-width: 600px;
-            margin-bottom: 20px;
+           -bottom: 20px;
         }
         input {
             display: block;
@@ -56,7 +56,7 @@
     <div class="container">
         <img src="Bluebar.jpg" alt="Logo" class="logo">
         <h1>Brother Solutions</h1>
-        <h2>Keyence & Brother Smooth Print</h2>
+        <h2>QR PRINT by Smooth Print</h2>
         <input type="text" id="article" placeholder="Input Article Name" required>
         <input type="text" id="datamatrix" placeholder="Input new Code" required>
         <input type="text" id="copies" placeholder="Number of copies" required>
@@ -71,18 +71,18 @@
     <script>
         function sendToPrint() {
             const article = document.getElementById('article').value;
-            const datamatrix = document.getElementById('datamatrix').value;
+	    const datamatrix = document.getElementById('datamatrix').value;
             const copies = document.getElementById('copies').value;
 
             const url = `brotherwebprint://print?filename=gf.lbx&size=102x76.bin&text_artikel1=${article}&barcode_barcode1=${datamatrix}&copies=${copies}`;
             
-            // Navigate to the generated URL to trigger the app in the background
-            window.location.href = url;
+            // Open the generated URL in a new window
+            window.open(url, '_blank');
         }
 
         function downloadTemplate() {
             const link = document.createElement('a');
-            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip';
+            link.href = 'https://github.com/bigpresales/QR/raw/refs/heads/main/files_keyence.zip'; // 
             link.download = 'keyence.zip';
             document.body.appendChild(link);
             link.click();
